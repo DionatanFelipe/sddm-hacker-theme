@@ -17,11 +17,11 @@ var matrix = {
 		}
 
 		// Semi-transparent black background for trail effect
-		ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+		ctx.fillStyle = "rgba(0, 0, 0, 0.07)";
 		ctx.fillRect(0, 0, width, height);
 
 		// Green text for matrix effect
-		ctx.fillStyle = "#00ff00";
+		ctx.fillStyle = "#00ff9c";
 		ctx.font = this.fontSize + "px 'JetBrainsMono Nerd Font Propo'";
 
 		for (var i = 0; i < this.drops.length; i++) {
