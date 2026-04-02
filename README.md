@@ -4,14 +4,24 @@
 
 Este é um tema SDDM estilo hacker com fundo escuro, texto verde neon e efeito de chuva digital da Matrix.
 
+## 
+![Preview](screenshot.png)
+
 # SDDM Hacker Fork Theme - EN
 This is a hacker-style SDDM theme with a dark background, neon green text, and a Matrix digital rain effect.
+
+To use in English, delete Main.qml and rename main.qml.EN to Main.qml.
+
+## 
+![Preview](en.png)
 
 # SDDM Hacker Fork Theme - ES
 Este es un tema SDDM estilo hacker con fondo oscuro, texto verde neón y efecto de lluvia digital de Matrix.
 
+Para usar en español, elimine Main.qml y renombre main.qml.ES a Main.qml.
+
 ## 
-![Preview](screenshot.png)
+![Preview](es.png)
 
 
 
