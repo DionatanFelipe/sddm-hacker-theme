@@ -8,282 +8,278 @@ Rectangle {
 	id: root
 	width: Screen.width
 	height: Screen.height
-	color: "#0a0a0a"
+	color: "#020807"
 
-	// SDDM Context Properties
+	// SDDM
 	property int sessionIndex: sessionSelector.currentIndex
 	property alias userName: usernameField.text
 	property alias password: passwordField.text
-	property bool singleUser: userModel.count === 1
 
-	// Background image
+	// Background
 	Image {
 		id: background
 		source: "assets/background.png"
 		anchors.fill: parent
-		opacity: 0.3
+		opacity: 0.25
 		fillMode: Image.PreserveAspectCrop
 	}
 
-	// Matrix digital rain effect
+	// Matrix
 	Canvas {
 		id: matrixCanvas
 		anchors.fill: parent
+		opacity: 0.85
+
+		renderTarget: Canvas.FramebufferObject
+		renderStrategy: Canvas.Cooperative
+
 		onPaint: {
 			var ctx = getContext("2d");
 			Matrix.matrix.drawMatrix(ctx, width, height);
 		}
+
 		Timer {
-			interval: 50
+			interval: 40
 			running: true
 			repeat: true
 			onTriggered: matrixCanvas.requestPaint()
 		}
 	}
 
-	// Login form
+	// LOGIN
 	ColumnLayout {
 		anchors.centerIn: parent
 		spacing: 20
 
 		Text {
-			text: "WELCOME TO THE DUNGEON"
-			font.family: "JetBrainsMono Nerd Font Propo"
+			text: "Bem vindo a MATRIX"
+			color: "#00ff9c"
 			font.pixelSize: 36
-			color: "#00ff00"
 			style: Text.Outline
-			styleColor: "#00cc00"
+			styleColor: "#003322"
 			Layout.alignment: Qt.AlignHCenter
 		}
 
+		// USER
 		TextField {
 			id: usernameField
-			placeholderText: "Username"
-			font.family: "JetBrainsMono Nerd Font Propo"
-			font.pixelSize: 18
-			color: "#00ff00"
+			placeholderText: "Usuário"
+			placeholderTextColor: "#007a5a"
+			color: "#00ff9c"
+                        selectionColor: "#00cc88"   
 			background: Rectangle {
-				color: "#1a1a1a"
-				border.color: "#00ff00"
-				border.width: 1
+				color: "#03110f"
+				border.color: usernameField.activeFocus ? "#00ff9c" : "#004d3a"
+				border.width: usernameField.activeFocus ? 2 : 1
 				radius: 5
 			}
+
 			Layout.alignment: Qt.AlignHCenter
 			Layout.preferredWidth: 300
 			KeyNavigation.tab: passwordField
-			Keys.onPressed: (event) => {
-								if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-									passwordField.forceActiveFocus()
-								}
-							}
 		}
 
+		// PASSWORD
 		TextField {
 			id: passwordField
-			placeholderText: "Password"
+			placeholderText: "Senha"
+			placeholderTextColor: "#007a5a"
 			echoMode: TextInput.Password
-			font.family: "JetBrainsMono Nerd Font Propo"
-			font.pixelSize: 18
-			color: "#00ff00"
+			color: "#00ff9c"
+			selectionColor: "#00cc88" 
+
 			background: Rectangle {
-				color: "#1a1a1a"
-				border.color: "#00ff00"
-				border.width: 1
+				color: "#03110f"
+				border.color: passwordField.activeFocus ? "#00ff9c" : "#004d3a"
+				border.width: passwordField.activeFocus ? 2 : 1
 				radius: 5
 			}
+
 			Layout.alignment: Qt.AlignHCenter
 			Layout.preferredWidth: 300
 			KeyNavigation.tab: loginButton
+
 			Keys.onPressed: (event) => {
-								if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-									loginButton.clicked()
-								}
-							}
+				if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+					loginButton.clicked()
+				}
+			}
 		}
 
+		// BUTTON
 		Button {
 			id: loginButton
-			text: "Login"
-			font.family: "JetBrainsMono Nerd Font Propo"
-			font.pixelSize: 18
+			text: "Conectar"
+
 			background: Rectangle {
-				color: parent.pressed ? "#003300" : "#1a1a1a"
-				border.color: "#00ff00"
+				color: parent.pressed ? "#003322" : "#03110f"
+				border.color: "#00ff9c"
 				border.width: 1
 				radius: 5
 			}
+
 			contentItem: Text {
-				text: "Login"
-				color: "#00ff00"
-				font.family: "JetBrainsMono Nerd Font Propo"
-				font.pixelSize: 18
+				text: "Conectar"
+				color: "#00ff9c"
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
 			}
+
 			Layout.alignment: Qt.AlignHCenter
 			Layout.preferredWidth: 150
-			KeyNavigation.tab: usernameField
+
 			onClicked: {
 				sddm.login(usernameField.text, passwordField.text, sessionIndex)
 			}
 		}
 	}
 
-	// Glitch effect
-	Timer {
-		interval: 3000
-		running: true
-		repeat: true
-		onTriggered: {
-			root.opacity = Math.random() > 0.1 ? 1.0 : 0.8
-		}
-	}
+	// SESSION SELECTOR
+ComboBox {
+    id: sessionSelector
+    model: sessionModel
+    textRole: "name"
+    font.family: "JetBrainsMono Nerd Font Propo"
+    font.pixelSize: 14
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    anchors.margins: 20
+    width: 225
 
-	// Session selection
-	ComboBox {
-		id: sessionSelector
-		model: sessionModel
-		textRole: "name"
-		font.family: "JetBrainsMono Nerd Font Propo"
-		font.pixelSize: 14
-		anchors.bottom: parent.bottom
-		anchors.right: parent.right
-		anchors.margins: 20
-		width: 225
+    background: Rectangle {
+        color: "#020807"
+        border.color: "#00ff9c"
+        border.width: 1
+        radius: 5
+    }
 
-		background: Rectangle {
-			color: "#1a1a1a"
-			border.color: "#00ff00"
-			border.width: 1
-			radius: 5
-		}
+    indicator: Rectangle {
+        width: 5
+        height: 5
+        color: "#00ff9c"  // cor da setinha
+        rotation: 45
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        border.color: "#00ff9c"
+        border.width: 1
+        anchors.rightMargin: 8
+    }
 
-		contentItem: Text {
-			text: sessionSelector.displayText
-			color: "#00ff00"
-			font.family: "JetBrainsMono Nerd Font Propo"
-			font.pixelSize: 14
-			verticalAlignment: Text.AlignVCenter
-			leftPadding: 10
-		}
 
-		popup: Popup {
-			y: sessionSelector.height
-			width: sessionSelector.width
-			implicitHeight: contentItem.implicitHeight
-			padding: 1
+    contentItem: Text {
+        anchors.fill: parent          // preenche todo o ComboBox
+        anchors.margins: 0
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        text: sessionSelector.displayText
+        color: "#00ff9c"
+        font.family: "JetBrainsMono Nerd Font Propo"
+        font.pixelSize: 14
+    }
 
-			background: Rectangle {
-				color: "#1a1a1a"
-				border.color: "#00ff00"
-				border.width: 1
-				radius: 5
-			}
 
-			contentItem: ListView {
-				clip: true
-				implicitHeight: contentHeight
-				model: sessionSelector.popup.visible ? sessionSelector.delegateModel : null
-				currentIndex: sessionSelector.highlightedIndex
+    popup: Popup {
+        y: sessionSelector.height
+        width: sessionSelector.width
+        implicitHeight: contentItem.implicitHeight
+        padding: 1
 
-				delegate: ItemDelegate {
-					width: sessionSelector.width
-					contentItem: Text {
-						text: model.name
-						color: "#00ff00"
-						font.family: "JetBrainsMono Nerd Font Propo"
-						font.pixelSize: 14
-						elide: Text.ElideRight
-						verticalAlignment: Text.AlignVCenter
-					}
-					background: Rectangle {
-						color: highlighted ? "#003300" : "#1a1a1a"
-					}
-				}
-			}
-		}
-	}
+        background: Rectangle {
+            color: "#020807"
+            border.color: "#00ff9c"
+            border.width: 1
+            radius: 5
+        }
 
-	// Power options
-	Row {
-		anchors.bottom: parent.bottom
-		anchors.left: parent.left
-		anchors.margins: 20
-		spacing: 10
+        contentItem: ListView {
+            clip: true
+            implicitHeight: contentHeight
+            model: sessionSelector.popup.visible ? sessionSelector.delegateModel : null
+            currentIndex: sessionSelector.highlightedIndex
 
-		Button {
-			text: "⏻"
-			font.pixelSize: 20
-			width: 40
-			height: 40
-			background: Rectangle {
-				color: "#1a1a1a"
-				border.color: "#00ff00"
-				border.width: 1
-				radius: 5
-			}
-			contentItem: Text {
-				text: "⏻"
-				color: "#00ff00"
-				font.pixelSize: 20
-				horizontalAlignment: Text.AlignHCenter
-				verticalAlignment: Text.AlignVCenter
-			}
-			onClicked: sddm.powerOff()
-		}
+            delegate: ItemDelegate {
+              width: sessionSelector.width
+              height: 24
 
-		Button {
-			text: "↻"
-			font.pixelSize: 20
-			width: 40
-			height: 40
-			background: Rectangle {
-				color: "#1a1a1a"
-				border.color: "#00ff00"
-				border.width: 1
-				radius: 5
-			}
-			contentItem: Text {
-				text: "↻"
-				color: "#00ff00"
-				font.pixelSize: 20
-				horizontalAlignment: Text.AlignHCenter
-				verticalAlignment: Text.AlignVCenter
-			}
-			onClicked: sddm.reboot()
-		}
-	}
+    contentItem: Text {
+        text: model.name
+        color: "#00ff9c"
+        font.family: "JetBrainsMono Nerd Font Propo"
+        font.pixelSize: 14
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter    // centraliza horizontalmente
+        Layout.fillWidth: true                     // faz o Text ocupar a largura do delegate
+        elide: Text.ElideRight
+    }
 
-	// Error message display
+    background: Rectangle {
+        color: highlighted ? "#003322" : "#020807"
+    }
+}
+        }
+    }
+}
+	// POWER
+Row {
+    anchors.bottom: parent.bottom
+    anchors.left: parent.left
+    anchors.margins: 20
+    spacing: 10
+
+Button {
+    width: 40
+    height: 40
+    background: Rectangle {
+        color: parent.pressed ? "#003322" : "#03110f"  // mesma cor do botão Conectar
+        border.color: "#00ff9c"
+        border.width: 1
+        radius: 5
+    }
+    contentItem: Text {
+        text: "⏻"        // ou "↻"
+        color: "#00ff9c"
+        font.pixelSize: 20
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+    }
+    onClicked: sddm.powerOff()    // ou sddm.reboot()
+}
+
+    Button {
+    width: 40
+    height: 40
+    background: Rectangle {
+        color: parent.pressed ? "#003322" : "#03110f"  // mesma cor do botão Conectar
+        border.color: "#00ff9c"
+        border.width: 1
+        radius: 5      
+        }
+        contentItem: Text {
+            text: "↻"
+            color: "#00ff9c"
+            font.pixelSize: 20
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        onClicked: sddm.reboot()
+    }
+}
+
+	// ERROR
 	Text {
 		id: errorMessage
 		anchors.top: parent.top
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.topMargin: 50
-		color: "#ff0000"
-		font.family: "JetBrainsMono Nerd Font Propo"
+		color: "#ff3b3b"
 		font.pixelSize: 16
-		visible: text.length > 0
-		text: ""
 	}
 
-	// Connect to SDDM signals
-	Connections {
-		target: sddm
-		function onLoginSucceeded() {
-			errorMessage.text = ""
-		}
-		function onLoginFailed() {
-			errorMessage.text = "Login failed. Please try again."
-			passwordField.clear()
-			passwordField.forceActiveFocus()
-		}
-	}
-
-	// Helper to find non-root users
+	// AUTO USER
 	Instantiator {
 		id: userChecker
 		model: userModel
+
 		delegate: QtObject {
 			property string userName: model.name
 			property bool isRoot: model.name === "root"
@@ -299,15 +295,12 @@ Rectangle {
 	}
 
 	Component.onCompleted: {
-		// Small delay to ensure userChecker has processed all users
 		Qt.callLater(function() {
 			if (userChecker.nonRootUsers.length === 1) {
 				usernameField.text = userChecker.nonRootUsers[0]
 				passwordField.forceActiveFocus()
-			} else if (userName.length === 0) {
-				usernameField.forceActiveFocus()
 			} else {
-				passwordField.forceActiveFocus()
+				usernameField.forceActiveFocus()
 			}
 		})
 	}
