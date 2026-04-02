@@ -160,7 +160,4 @@ sudo systemctl restart sddm
 			Layout.alignment: Qt.AlignHCenter
 		}
 
-
-* O efeito Matrix é leve, mas pode ser desativado removendo os componentes `Canvas` e `Timer` em `Main.qml` caso haja problemas de desempenho.
-
 * El efecto Matrix es ligero, pero se puede desactivar eliminando los componentes `Canvas` y `Timer` en `Main.qml` si hay problemas de rendimiento.
