@@ -113,7 +113,8 @@ sudo systemctl restart sddm
 
 ## Notas
 * No main se edita o texto Bem-vindo a matrix e outros;
-		Text {
+
+* 		Text {
 			text: "Bem-vindo a MATRIX"
 			color: "#00ff9c"
 			font.pixelSize: 36
@@ -130,7 +131,8 @@ sudo systemctl restart sddm
 
 ## Notes
 * In the main is edited the text and others:
-		Text {
+
+* 		Text {
 			text: "Bem-vindo a MATRIX"
 			color: "#00ff9c"
 			font.pixelSize: 36
@@ -138,6 +140,7 @@ sudo systemctl restart sddm
 			styleColor: "#003322"
 			Layout.alignment: Qt.AlignHCenter
 		}
+
 
 * The Matrix effect is lightweight, but it can be disabled by removing the `Canvas` and `Timer` components in `Main.qml` if performance is an issue.
 
@@ -147,7 +150,8 @@ sudo systemctl restart sddm
 
 ## Notas
 * En la parte principal se edita el texto Bienvenido y otros;
-		Text {
+
+* 		Text {
 			text: "Bem-vindo a MATRIX"
 			color: "#00ff9c"
 			font.pixelSize: 36
@@ -155,6 +159,7 @@ sudo systemctl restart sddm
 			styleColor: "#003322"
 			Layout.alignment: Qt.AlignHCenter
 		}
+
 
 * O efeito Matrix é leve, mas pode ser desativado removendo os componentes `Canvas` e `Timer` em `Main.qml` caso haja problemas de desempenho.
 
