@@ -112,7 +112,7 @@ sudo systemctl restart sddm
 ### PT-BR
 
 ## Notas
-* No main se edita o texto Bem-vindo a matrix e outros;
+* No Main.qml se edita o texto Bem-vindo a matrix e outros;
 
 * 		Text {
 			text: "Bem-vindo a MATRIX"
@@ -130,7 +130,7 @@ sudo systemctl restart sddm
 ### EN
 
 ## Notes
-* In the main is edited the text and others:
+* In the Main.qml is edited the text and others:
 
 * 		Text {
 			text: "Bem-vindo a MATRIX"
@@ -149,7 +149,7 @@ sudo systemctl restart sddm
 ### ES
 
 ## Notas
-* En la parte principal se edita el texto Bienvenido y otros;
+* En la parte Main.qml se edita el texto Bienvenido y otros;
 
 * 		Text {
 			text: "Bem-vindo a MATRIX"
