@@ -52,7 +52,7 @@ Rectangle {
 		spacing: 20
 
 		Text {
-			text: "Bem vindo a MATRIX"
+			text: "Bem-vindo a MATRIX"
 			color: "#00ff9c"
 			font.pixelSize: 36
 			style: Text.Outline
